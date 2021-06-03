@@ -42,7 +42,10 @@ from .cursors import Cursor
 from .utils import _ConnectionContextManager, _ContextManager
 from .log import logger
 
-DEFAULT_USER = getpass.getuser()
+try:
+    DEFAULT_USER = getpass.getuser()
+except:
+    DEFAULT_USER = None
 
 
 def connect(host="localhost", user=None, password="",
@@ -165,7 +168,7 @@ class Connection:
 
         self._host = host
         self._port = port
-        self._user = user or DEFAULT_USER
+        self._user = user or DEFAULT_USER or "root"
         self._password = password or ""
         self._db = db
         self._no_delay = no_delay
